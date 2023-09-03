@@ -3,7 +3,19 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import { elements } from './js/elem';
-import { BASE_URL, options } from './js/api';
+import { BASE_URL, options } from './js/photo api';
+
+searchForm.addEventListener('submit', onFormSybmit);
+window.addEventListener('scroll', onScrollHandler);
+document.addEventListener('DOMContentLoaded', hideLoader);
+
+function showLoader() {
+  loaderEl.style.display = 'block';
+}
+
+function hideLoader() {
+  loaderEl.style.display = 'none';
+}
 
 const { galleryEl, searchInput, searchForm, loaderEl } = elements;
 
@@ -19,18 +31,6 @@ const lightbox = new SimpleLightbox('.lightbox', {
   scrollZoom: false,
   close: false,
 });
-
-searchForm.addEventListener('submit', onFormSybmit);
-window.addEventListener('scroll', onScrollHandler);
-document.addEventListener('DOMContentLoaded', hideLoader);
-
-function showLoader() {
-  loaderEl.style.display = 'block';
-}
-
-function hideLoader() {
-  loaderEl.style.display = 'none';
-}
 
 function renderGallery(hits) {
   const markup = hits
@@ -91,19 +91,6 @@ async function loadMore() {
   }
 }
 
-function onScrollHandler() {
-  const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-  const scrollThreshold = 300;
-  if (
-    scrollTop + clientHeight >= scrollHeight - scrollThreshold &&
-    galleryEl.innerHTML !== '' &&
-    !isLoadingMore &&
-    !reachedEnd
-  ) {
-    loadMore();
-  }
-}
-
 async function onFormSybmit(e) {
     e.preventDefault();
     options.params.q = searchInput.value.trim();
@@ -132,5 +119,18 @@ async function onFormSybmit(e) {
     } catch (err) {
       Notify.failure(err);
       hideLoader();
+    }
+  }
+
+  function onScrollHandler() {
+    const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+    const scrollThreshold = 300;
+    if (
+      scrollTop + clientHeight >= scrollHeight - scrollThreshold &&
+      galleryEl.innerHTML !== '' &&
+      !isLoadingMore &&
+      !reachedEnd
+    ) {
+      loadMore();
     }
   }
