@@ -103,3 +103,34 @@ function onScrollHandler() {
     loadMore();
   }
 }
+
+async function onFormSybmit(e) {
+    e.preventDefault();
+    options.params.q = searchInput.value.trim();
+    if (options.params.q === '') {
+      return;
+    }
+    options.params.page = 1;
+    galleryEl.innerHTML = '';
+    reachedEnd = false;
+  
+    try {
+      showLoader();
+      const response = await axios.get(BASE_URL, options);
+      totalHits = response.data.totalHits;
+      const hits = response.data.hits;
+      if (hits.length === 0) {
+        Notify.failure(
+          'Sorry, there are no images matching your search query. Please try again.'
+        );
+      } else {
+        Notify.success(`Hooray! We found ${totalHits} images.`);
+        renderGallery(hits);
+      }
+      searchInput.value = '';
+      hideLoader();
+    } catch (err) {
+      Notify.failure(err);
+      hideLoader();
+    }
+  }
