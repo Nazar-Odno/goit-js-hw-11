@@ -10,7 +10,6 @@
   }
   
   html {
-    background-image: linear-gradient(to right, #b6fbff, #83a4d4);
     background-repeat: no-repeat;
     background-size: cover;
   }
@@ -18,7 +17,6 @@
   body {
     overflow-x: hidden;
     max-width: 100%;
-    background-image: linear-gradient(to right, #b6fbff, #83a4d4);
     background-repeat: no-repeat;
     background-size: cover;
   }
@@ -46,8 +44,6 @@
     border-radius: 8px;
     outline: none;
     border: none;
-    background-color: #e4f6f7;
-    box-shadow: 0 0 0 2px #e4f6f7;
     margin-right: 8px;
   }
   
@@ -59,7 +55,6 @@
     padding: 4px 12px;
     border-radius: 8px;
     border: none;
-    background-color: #e4f6f7;
     cursor: pointer;
     transition: 0.4s;
   }
